@@ -16,6 +16,9 @@ TARGET = Virex
 # Default target
 all: $(TARGET)
 
+# Declare phony targets
+.PHONY: all clean rebuild
+
 # Compile source files into object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -26,4 +29,7 @@ $(TARGET): $(OBJS)
 
 # Clean up object files and executable
 clean:
-	rm -f $(OBJS) $(TARGET)
+	$(RM) $(OBJS) $(TARGET)
+
+# Rebuild the project
+rebuild: clean all
