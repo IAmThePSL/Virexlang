@@ -1,0 +1,10 @@
+// This is a single-line comment
+/* This is a 
+multi-line
+comment */
+let x = 5;
+let y = 10;
+
+print(x);
+print(y);
+print("Hello, Virex!");
