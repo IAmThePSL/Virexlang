@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../include/lexer.h"
 #include "../include/token.h"
+#include "../include/token_types.h"
 
 void print_token(Token *token) {
     printf("Token(Type: %d, Lexeme: '%s', Line: %d, Column: %d)\n",
@@ -24,13 +25,17 @@ int main(int argc, char **argv) {
     Token *token;
 
     printf("Lexing file: %s\n", argv[1]);
-    do {
+    while (1) {
         token = lex_next_token(lexer);
         print_token(token);
-        destroy_token(token);
-    } while (token->type != TOKEN_EOF);
+        if (token->type == TOKEN_EOF) {
+            destroy_token(token); // Free the EOF token
+            break; // Stop after EOF
+        }
+        destroy_token(token); // Free non-EOF tokens
+    }
 
-		fclose(file);
+    fclose(file);
     destroy_lexer(lexer);
     return EXIT_SUCCESS;
 }
