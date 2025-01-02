@@ -35,7 +35,7 @@ The REPL (Read-Eval-Print Loop) provides an interactive environment for testing 
 
 1. Build the REPL:
 ```bash
-gcc -o repl src/repl.c src/lexer.c src/token.c -Iinclude
+gcc -o repl src/repl.c src/lexer.c src/token.c src/parser.c -Iinclude
 ```
 
 2. Start the REPL:
