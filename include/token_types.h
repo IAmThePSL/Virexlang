@@ -19,6 +19,7 @@ typedef enum {
     TOKEN_TRUE,
     TOKEN_FALSE,
     TOKEN_NULL,
+    TOKEN_PRINT,
 
     TOKEN_PLUS,         // +
     TOKEN_MINUS,        // -
