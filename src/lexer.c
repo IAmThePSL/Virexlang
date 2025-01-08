@@ -156,9 +156,12 @@ Token *lex_string(Lexer *lexer) {
                 case 'b': lexeme[length++] = '\b'; break;
                 case 'f': lexeme[length++] = '\f'; break;
                 case '0': lexeme[length++] = '\0'; break;
+                case '"': lexeme[length++] = '"'; break;
+                case '\\': lexeme[length++] = '\\'; break;
                 default:
                     fprintf(stderr, "Error: Unknown escape sequence '\\%c' at line %d, column %d\n",
                             lexer->current_char, lexer->line, lexer->column);
+                    lexeme[length++] = lexer->current_char; // Include the unknown escape sequence as-is
                     break;
             }
         } else if (length < MAX_LEXEME_LENGTH - 1) {
