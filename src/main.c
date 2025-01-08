@@ -3,6 +3,7 @@
 #include "../include/lexer.h"
 #include "../include/token.h"
 #include "../include/token_types.h"
+#include "../include/malloc.h"
 
 void print_token(Token *token) {
     printf("Token(Type: %d, Lexeme: '%s', Line: %d, Column: %d)\n",
