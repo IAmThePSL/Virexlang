@@ -1,4 +1,4 @@
-// Normally used in interpretted langs but we use it now too cus we can :)
+// Normally used in interpretted langs (e.g., Python) but we use it now too cus we can :)
 #include <stdio.h>
 #include <string.h>
 #include "../include/lexer.h"
