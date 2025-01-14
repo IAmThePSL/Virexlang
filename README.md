@@ -1,6 +1,6 @@
 # 🚀 Virex Programming Language 🌟
 
-Welcome to **Virex**—a lightweight, beginner-friendly programming language designed for simplicity and power! Inspired by **JavaScript** and **C++**, Virex makes coding intuitive without sacrificing robust features.
+Welcome to **Virex**! A lightweight, beginner-friendly programming language designed for simplicity and power! Inspired by **JavaScript** and **C++**, Virex makes coding intuitive without sacrificing robust features.
 
 ---
 
