@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -g -Iinclude
 
 # Source files
-SRCS = src/main.c src/lexer.c src/token.c
+SRCS = src/main.c src/lexer.c src/token.c src/parser.c src/malloc.c src/statements/ifstatement.c src/statements/whilestatement.c src/statements/printstatement.c src/statements/variabledeclaration.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)
