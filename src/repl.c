@@ -5,17 +5,7 @@
 #include "../include/token.h"
 #include "../include/token_types.h"
 #include "../include/parser.h"
-
-struct Lexer {
-    FILE *input_stream;
-    int current_char;
-};
-
-// Print a token
-void print_token(Token *token) {
-    printf("Token(Type: %d, Lexeme: '%s', Line: %d, Column: %d)\n",
-           token->type, token->lexeme, token->line, token->column);
-}
+#include "statements/allstatements.h"
 
 // REPL loop
 void repl() {
@@ -46,22 +36,6 @@ void repl() {
         }
 
         Lexer *lexer = create_lexer(input_stream);
-
-        // Tokenize and print tokens
-        Token *token;
-        while (1) {
-            token = lex_next_token(lexer);
-            print_token(token);
-            if (token->type == TOKEN_EOF) {
-                destroy_token(token);
-                break;
-            }
-            destroy_token(token);
-        }
-
-        // Reset the lexer to the start of the input
-        rewind(input_stream);
-        lexer->current_char = fgetc(input_stream);
 
         // Parse and execute the statement
         execute_statement(lexer);
