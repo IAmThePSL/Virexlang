@@ -10,12 +10,15 @@
 #define MAX_LEXEME_LENGTH 256
 #define KEYWORD_COUNT 16
 
-typedef struct Lexer {
-    FILE *file;
-    int current_char;
-    int line;
-    int column;
-} Lexer;
+
+// This is defined in the lexer.h header file
+// So, no need to define it here again.
+// typedef struct Lexer {
+//     FILE *file;
+//     int current_char;
+//     int line;
+//     int column;
+// } Lexer;
 
 // Hash table for keywords
 typedef struct Keyword {
