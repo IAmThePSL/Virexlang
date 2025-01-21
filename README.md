@@ -19,7 +19,7 @@ Welcome to **Virex**! A lightweight, beginner-friendly programming language desi
 ### 🔢 Variables
 ```Virex
 int x = 10;         // Integer variable
-str y = "Hello";    // String variable
+string y = "Hello";    // String variable
 bool cool = true;   // Boolean variable
 let z = 42;         // Generic variable (type inferred)
 const pi = 3.1415;  // Immutable constant
