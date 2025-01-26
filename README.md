@@ -125,7 +125,7 @@ We ❤️ contributors!
 Found a bug? Have a cool feature idea? Feel free to open an issue or submit a pull request. Let’s make Virex even better together! ✨
 
 ## 📜 License
-This project is licensed under the [MIT License](https://github.com/IAmThePSL/Virex-programming-lang/blob/main/LICENSE)
+This project is licensed under the [MIT License](https://github.com/IAmThePSL/Virexlang/blob/main/LICENSE)
 
 Power up your coding journey with Virex! ⚡️
 ---
