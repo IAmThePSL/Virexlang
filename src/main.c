@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/lexer.h"
-#include "../include/token.h"
-#include "../include/token_types.h"
-#include "../include/malloc.h"
+#include "../include/lexer/lexer.h"
+#include "../include/lexer/token.h"
+#include "../include/lexer/token_types.h"
+#include "../include/parser/malloc.h"
 
 void print_token(Token *token) {
     printf("Token(Type: %d, Lexeme: '%s', Line: %d, Column: %d)\n",
