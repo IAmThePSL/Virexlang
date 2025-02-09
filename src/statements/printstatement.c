@@ -1,10 +1,11 @@
-#include "printstatement.h"
-#include "../../include/parser.h" // For evaluate_expression and find_variable
+#include "../../include/statements/printstatement.h"
+#include "../../include/parser/parser.h" // For evaluate_expression and find_variable
 #include <stdio.h>
+#include <string.h>
 
 // Define global variables
-Variable variables[100];
-int variable_count = 0;
+extern Variable variables[100];
+extern int variable_count;
 
 void handle_print_statement(Lexer *lexer) {
     Token *lparen = lex_next_token(lexer); // '('
