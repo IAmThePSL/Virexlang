@@ -1,11 +1,11 @@
 // Normally used in interpretted langs (e.g., Python) but we use it now too cus we can :)
 #include <stdio.h>
 #include <string.h>
-#include "../include/lexer.h"
-#include "../include/token.h"
-#include "../include/token_types.h"
-#include "../include/parser.h"
-#include "statements/allstatements.h"
+#include "../include/lexer/lexer.h"
+#include "../include/lexer/token.h"
+#include "../include/lexer/token_types.h"
+#include "../include/parser/parser.h"
+#include "../include/statements/allstatements.h"
 
 // REPL loop
 void repl() {
