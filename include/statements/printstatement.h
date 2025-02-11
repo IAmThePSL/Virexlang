@@ -3,6 +3,9 @@
 
 #include "../../include/lexer/lexer.h"
 
-void handle_print_statement(Lexer *lexer);
+class PrintStatement {
+public:
+    static void handlePrintStatement(Lexer &lexer);
+};
 
 #endif // PRINTSTATEMENT_H
