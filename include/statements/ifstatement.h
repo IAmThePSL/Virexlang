@@ -3,6 +3,9 @@
 
 #include "../../include/lexer/lexer.h"
 
-void handle_if_statement(Lexer *lexer);
+class IfStatement {
+public:
+    static void handleIfStatement(Lexer &lexer);
+};
 
 #endif // IFSTATEMENT_H
