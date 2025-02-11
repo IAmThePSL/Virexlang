@@ -3,6 +3,9 @@
 
 #include "../../include/lexer/lexer.h"
 
-void handle_while_statement(Lexer *lexer);
+class WhileStatement {
+public:
+    static void handleWhileStatement(Lexer &lexer);
+};
 
 #endif // WHILESTATEMENT_H
