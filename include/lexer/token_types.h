@@ -2,7 +2,7 @@
 #define TOKEN_TYPES_H
 
 // Token types enumeration
-typedef enum {
+enum class TokenType {
     TOKEN_INT,
     TOKEN_STR,
     TOKEN_BOOL,
@@ -16,9 +16,9 @@ typedef enum {
     TOKEN_RETURN,
     TOKEN_CLASS,
     TOKEN_IMPORT,
-    TOKEN_TRUE,
-    TOKEN_FALSE,
-    TOKEN_NULL,
+    TOKEN_TRUE_,
+    TOKEN_FALSE_,
+    TOKEN_NULL_,
     TOKEN_PRINT,
 
     TOKEN_PLUS,         // +
@@ -43,7 +43,7 @@ typedef enum {
 
     TOKEN_ERROR,            // Invalid token
     TOKEN_EOF,              // End of file
-    TOKEN_SEMICOLON,        // ;
-} TokenType;
+    TOKEN_SEMICOLON         // ;
+};
 
 #endif // TOKEN_TYPES_H
