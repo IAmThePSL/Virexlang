@@ -2,16 +2,23 @@
 #define TOKEN_H
 
 #include "token_types.h"
+#include <string>
 
-typedef struct Token {
+class Token {
+public:
+    Token(TokenType type, const std::string &lexeme, int line, int column);
+    ~Token() = default;
+
+    TokenType getType() const;
+    const std::string &getLexeme() const;
+    int getLine() const;
+    int getColumn() const;
+
+private:
     TokenType type;
-    char *lexeme;
+    std::string lexeme;
     int line;
     int column;
-} Token;
-
-// Function prototypes
-Token *create_token(TokenType type, const char *lexeme, int line, int column);
-void destroy_token(Token *token);
+};
 
 #endif // TOKEN_H
