@@ -1,0 +1,25 @@
+{
+  "name": "virex-language-support",
+  "displayName": "Virex Language Support",
+  "description": "Language support for Virex",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.97.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "virex",
+      "aliases": ["virex", "virex"],
+      "extensions": [".vix"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "virex",
+      "scopeName": "source.virex",
+      "path": "./syntaxes/virex.tmLanguage.json"
+    }]
+  }
+}
