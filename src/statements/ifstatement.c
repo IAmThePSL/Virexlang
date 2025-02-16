@@ -1,111 +1,86 @@
 #include "../../include/parser/parser.h"
+#include <stack>
+#include <iostream>
 
-#define MAX_UNGET_TOKENS 256 // I actually don't know why I chose this number. Forgive me...
+constexpr int MAX_UNGET_TOKENS = 256; // I don't actually know why i chose this number... Forgive me.
 
-int evaluate_expression(Token *condition);
+int evaluate_expression(std::vector<Token>& condition);
 int unget_buffer_index = 0;
+std::vector<Token> unget_buffer;
 
-Token unget_buffer[MAX_UNGET_TOKENS];
-
-void lex_unget_token(Lexer *lexer, Token *token){
-    if (unget_buffer_index < MAX_UNGET_TOKENS) {
-        unget_buffer[unget_buffer_index++] = *token;
+void lex_unget_token(Lexer& lexer, Token token) {
+    if (unget_buffer.size() < MAX_UNGET_TOKENS) {
+        unget_buffer.push_back(token);
     } else {
-        fprintf(stderr, "Error: unget buffer overflow\n");
+        std::cerr << "Error: unget buffer overflow" << std::endl;
     }
 }
 
-// Handle if statements
-void handle_if_statement(Lexer *lexer) {
-    Token *condition_token = lex_next_token(lexer);
-    if (!condition_token || condition_token->type != TOKEN_LPAREN) {
-        fprintf(stderr, "Error: Expected '(' after 'if'\n");
+void handle_if_statement(Lexer& lexer) {
+    Token condition_token = lex_next_token(lexer);
+    if (condition_token.type != TOKEN_LPAREN) {
+        std::cerr << "Error: Expected '(' after 'if'" << std::endl;
         return;
     }
 
-    // Parse the condition inside the parentheses
-    Token *condition = lex_next_token(lexer);
-    if (!condition) {
-        fprintf(stderr, "Error: Expected condition after '('\n");
+    std::vector<Token> condition_tokens;
+    Token token;
+    while ((token = lex_next_token(lexer)).type != TOKEN_RPAREN) {
+        if (token.type == TOKEN_EOF) {
+            std::cerr << "Error: Unexpected end of input inside condition" << std::endl;
+            return;
+        }
+        condition_tokens.push_back(token);
+    }
+
+    int condition_result = evaluate_expression(condition_tokens);
+    Token lbrace = lex_next_token(lexer);
+    if (lbrace.type != TOKEN_LBRACE) {
+        std::cerr << "Error: Expected '{' after 'if' condition" << std::endl;
         return;
     }
 
-    Token *rparen = lex_next_token(lexer);
-    if (!rparen || rparen->type != TOKEN_RPAREN) {
-        fprintf(stderr, "Error: Expected ')' after condition\n");
-        return;
-    }
-
-    // Evaluate the condition
-    int condition_result = evaluate_expression(condition);
     if (condition_result) {
-        // Execute the if block
-        Token *lbrace = lex_next_token(lexer);
-        if (!lbrace || lbrace->type != TOKEN_LBRACE) {
-            fprintf(stderr, "Error: Expected '{' after 'if' condition\n");
-            return;
-        }
-
-        // Execute statements inside the if block
-        while (1) {
-            Token *token = lex_next_token(lexer);
-            if (!token || token->type == TOKEN_RBRACE) {
-                break; // End of if block
-            }
-            execute_statement(lexer); // Execute each statement in the block
-            destroy_token(token);
-        }
-    } else {
-        // Skip the if block
-        Token *token = lex_next_token(lexer);
-        if (!token || token->type != TOKEN_LBRACE) {
-            fprintf(stderr, "Error: Expected '{' after 'if' condition\n");
-            return;
-        }
-
-        // Skip all tokens until the matching '}'
-        int brace_count = 1;
-        while (brace_count > 0) {
-            token = lex_next_token(lexer);
-            if (!token) {
-                fprintf(stderr, "Error: Unexpected end of input\n");
+        while (true) {
+            Token token = lex_next_token(lexer);
+            if (token.type == TOKEN_RBRACE) break;
+            if (token.type == TOKEN_EOF) {
+                std::cerr << "Error: Unexpected end of input inside if-block" << std::endl;
                 return;
             }
-            if (token->type == TOKEN_LBRACE) {
-                brace_count++;
-            } else if (token->type == TOKEN_RBRACE) {
-                brace_count--;
-            }
-            destroy_token(token);
-        }
-    }
-
-    // Check for an else block
-    Token *else_token = lex_next_token(lexer);
-    if (else_token && else_token->type == TOKEN_ELSE) {
-        Token *lbrace = lex_next_token(lexer);
-        if (!lbrace || lbrace->type != TOKEN_LBRACE) {
-            fprintf(stderr, "Error: Expected '{' after 'else'\n");
-            return;
-        }
-
-        // Execute statements inside the else block
-        while (1) {
-            Token *token = lex_next_token(lexer);
-            if (!token || token->type == TOKEN_RBRACE) {
-                break; // End of else block
-            }
-            execute_statement(lexer); // Execute each statement in the block
-            destroy_token(token);
+            execute_statement(lexer);
         }
     } else {
-        // If there's no else block, put the token back
-        lex_unget_token(lexer, else_token);
-        destroy_token(else_token); // Ensure else_token is destroyed
+        std::stack<int> brace_stack;
+        brace_stack.push(1);
+        while (!brace_stack.empty()) {
+            token = lex_next_token(lexer);
+            if (token.type == TOKEN_EOF) {
+                std::cerr << "Error: Unexpected end of input" << std::endl;
+                return;
+            }
+            if (token.type == TOKEN_LBRACE) brace_stack.push(1);
+            else if (token.type == TOKEN_RBRACE) brace_stack.pop();
+        }
     }
 
-    // Cleanup tokens
-    destroy_token(condition_token);
-    destroy_token(condition);
-    destroy_token(rparen);
+    Token next_token = lex_next_token(lexer);
+    if (next_token.type == TOKEN_ELSE) {
+        Token else_lbrace = lex_next_token(lexer);
+        if (else_lbrace.type != TOKEN_LBRACE) {
+            std::cerr << "Error: Expected '{' after 'else'" << std::endl;
+            return;
+        }
+        while (true) {
+            token = lex_next_token(lexer);
+            if (token.type == TOKEN_RBRACE) break;
+            if (token.type == TOKEN_EOF) {
+                std::cerr << "Error: Unexpected end of input inside else-block" << std::endl;
+                return;
+            }
+            execute_statement(lexer);
+        }
+    } else {
+        lex_unget_token(lexer, next_token);
+    }
 }
